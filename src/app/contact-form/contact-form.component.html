@@ -1,0 +1,42 @@
+<form #m=ngForm (ngSubmit)="submit(m)">
+  <div class="form-group">
+  <label>First Name</label>
+  <input required minlength="3" ngModel #name="ngModel" name="name" #firstName type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+      <div *ngIf="name.errors.required">First Name is required</div>
+      <div *ngIf="name.errors.minlength">Name field should be at least {{ name.errors.minlength.requiredLength }} </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Comment</label>
+    <input ngModel minlength="10" required name="comment" #comment="ngModel" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="comment.touched && comment.invalid">
+      <div *ngIf="comment.errors.required">comment is required</div>
+      <div *ngIf="comment.errors.minlength">Comment field should be at least {{ comment.errors.minlength.requiredLength }} </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="contactMethod">Category</label>
+    <select required ngModel name="category" #category="ngModel" id="contactMethod" class="form-control">
+      <option value="">Choose one</option>
+      <option *ngFor="let category of contact" [ngValue]="category">{{ category.name }}</option>
+    </select>
+    <div class="alert alert-danger" *ngIf="category.touched && category.invalid">
+      Category field is required.
+    </div>
+  </div>
+  <div class="radio" *ngFor="let radioCustom of contact">
+    <label>
+      <input type="radio" ngModel name="contactRadio" [value]="radioCustom.id"> {{ radioCustom.name }}
+    </label>
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" ngModel name="isSubs">Subscribe Us
+  </div>
+  <p> {{ m.value | json }}</p>
+  <button class="btn btn-danger" [disabled]="!m.valid">Submit</button>
+  <br>
+  <hr>
+  <p>This is template driven form</p>
+</form>
+
